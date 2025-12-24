@@ -1,0 +1,47 @@
+{
+  "_description": "Configuration for batch multi-allele prediction script",
+  "_source": "Extracted from examples/use_case_4_batch_multi_allele.py",
+  "_use_case": "UC-004: Batch Prediction with Multiple Alleles",
+
+  "input_type": "peptide",
+  "context": false,
+  "output_format": "csv",
+  "include_summary": true,
+  "max_parallel_jobs": 4,
+
+  "batch_processing": {
+    "parallel_execution": false,
+    "continue_on_error": true,
+    "max_retries_per_allele": 2,
+    "timeout_per_allele": 300
+  },
+
+  "allele_sets": {
+    "common_hla_dr": ["DRB1_0101", "DRB1_0301", "DRB1_0401", "DRB1_0701", "DRB1_1101", "DRB1_1301", "DRB1_1501"],
+    "common_hla_dq": ["DQB1_0201", "DQB1_0301", "DQB1_0302", "DQB1_0501", "DQB1_0602", "DQB1_0603"],
+    "common_hla_dp": ["DPB1_0101", "DPB1_0201", "DPB1_0301", "DPB1_0401", "DPB1_0501"],
+    "test_set": ["DRB1_0101", "DRB1_1501"]
+  },
+
+  "output_formats": {
+    "csv": {
+      "enabled": true,
+      "include_header": true,
+      "separator": ",",
+      "encoding": "utf-8"
+    },
+    "excel": {
+      "enabled": false,
+      "requires_pandas": true,
+      "sheets": ["Summary", "Detailed_Results"],
+      "engine": "openpyxl"
+    }
+  },
+
+  "summary_statistics": {
+    "per_allele": true,
+    "overall": true,
+    "binding_distribution": true,
+    "top_binders": 10
+  }
+}

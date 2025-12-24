@@ -1,0 +1,38 @@
+{
+  "_description": "Default configuration for NetMHCIIpan MCP scripts",
+  "_created": "2025-12-21",
+  "_version": "1.0.0",
+
+  "netmhciipan": {
+    "default_allele": "DRB1_0101",
+    "timeout_seconds": 300,
+    "max_retries": 3
+  },
+
+  "output": {
+    "format": "text",
+    "include_raw_output": true,
+    "include_summary": true,
+    "save_intermediate_files": false
+  },
+
+  "prediction": {
+    "context_aware": false,
+    "terminal_anchor": false,
+    "sorted_output": false,
+    "strong_binder_threshold": 1.0,
+    "weak_binder_threshold": 5.0
+  },
+
+  "batch": {
+    "max_parallel_jobs": 4,
+    "continue_on_error": true,
+    "output_format": "csv"
+  },
+
+  "paths": {
+    "netmhciipan_executable": "auto",
+    "temp_dir": "/tmp",
+    "output_dir": "results"
+  }
+}

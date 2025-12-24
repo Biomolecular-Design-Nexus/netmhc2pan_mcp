@@ -1,0 +1,41 @@
+{
+  "_description": "Configuration for protein sequence analysis script",
+  "_source": "Extracted from examples/use_case_2_protein_sequence_analysis.py",
+  "_use_case": "UC-002: Protein Sequence Analysis with Context",
+
+  "allele": "DRB1_0101",
+  "input_type": "protein",
+  "context": false,
+  "terminal_anchor": false,
+  "sorted_output": false,
+  "output_format": "text",
+
+  "analysis_options": {
+    "context_aware": {
+      "enabled": false,
+      "window_size": 15,
+      "description": "Use flanking sequence context for prediction"
+    },
+    "terminal_anchor": {
+      "enabled": false,
+      "description": "Consider terminal anchor contributions"
+    },
+    "sorted_output": {
+      "enabled": false,
+      "description": "Sort results by binding affinity"
+    }
+  },
+
+  "filtering": {
+    "min_protein_length": 9,
+    "max_protein_length": 10000,
+    "remove_duplicates": true
+  },
+
+  "summary": {
+    "show_strong_binders": true,
+    "show_weak_binders": true,
+    "max_displayed_binders": 10,
+    "include_position_info": true
+  }
+}

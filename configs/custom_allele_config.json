@@ -1,0 +1,41 @@
+{
+  "_description": "Configuration for custom MHC allele prediction script",
+  "_source": "Extracted from examples/use_case_3_custom_allele_prediction.py",
+  "_use_case": "UC-003: Custom MHC Allele Prediction",
+
+  "input_type": "peptide",
+  "output_format": "text",
+  "use_alpha_chain": true,
+  "use_beta_chain": true,
+
+  "custom_allele_options": {
+    "alpha_chain": {
+      "required": false,
+      "format": "fasta",
+      "description": "Alpha chain sequence for MHC class II molecule"
+    },
+    "beta_chain": {
+      "required": true,
+      "format": "fasta",
+      "description": "Beta chain sequence for MHC class II molecule"
+    },
+    "combined_sequence": {
+      "required": false,
+      "format": "fasta",
+      "description": "Combined MHC sequence (alternative to alpha/beta)"
+    }
+  },
+
+  "validation": {
+    "check_sequence_format": true,
+    "min_chain_length": 100,
+    "max_chain_length": 500,
+    "validate_mhc_domains": false
+  },
+
+  "netmhciipan_options": {
+    "distance_calculation": true,
+    "nearest_neighbor": true,
+    "user_defined_allele": "USER_DEF"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "_description": "Configuration for peptide binding prediction script",
+  "_source": "Extracted from examples/use_case_1_peptide_prediction.py",
+  "_use_case": "UC-001: Basic Peptide Binding Prediction",
+
+  "allele": "DRB1_0101",
+  "input_type": "peptide",
+  "output_format": "text",
+  "verbose": true,
+
+  "netmhciipan_options": {
+    "input_type_flag": "1",
+    "prediction_mode": "EL"
+  },
+
+  "validation": {
+    "min_peptide_length": 9,
+    "max_peptide_length": 30,
+    "allowed_amino_acids": "ACDEFGHIKLMNPQRSTVWY"
+  },
+
+  "output": {
+    "include_binding_level": true,
+    "include_core_region": true,
+    "include_rank": true,
+    "include_score": true
+  }
+}
