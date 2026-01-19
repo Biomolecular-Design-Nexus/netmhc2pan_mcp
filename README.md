@@ -49,14 +49,25 @@ This MCP server provides access to NetMHCIIpan-4.3, a state-of-the-art tool for 
 
 ## Installation
 
+### Quick Setup (Recommended)
+
+Run the automated setup script:
+
+```bash
+cd netmhc2pan_mcp
+bash quick_setup.sh
+```
+
+The script will create the conda environment, install all dependencies, and display the Claude Code configuration. See `quick_setup.sh --help` for options like `--skip-env`.
+
 ### Prerequisites
 - Conda or Mamba (mamba recommended for faster installation)
 - Python 3.10+
 - Linux x86_64 system (for NetMHCIIpan binary)
 
-### Create Environment
+### Manual Installation (Alternative)
 
-First, create the conda environment following the established setup procedure:
+If you prefer manual installation or need to customize the setup:
 
 ```bash
 # Navigate to the MCP directory
@@ -69,11 +80,7 @@ mamba create -p ./env python=3.10 -y
 # Activate environment
 mamba activate ./env
 # or: conda activate ./env
-```
 
-### Install Dependencies
-
-```bash
 # Install core dependencies
 pip install fastmcp loguru click pandas numpy tqdm --no-cache-dir
 
