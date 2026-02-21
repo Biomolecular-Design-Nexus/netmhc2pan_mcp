@@ -28,9 +28,13 @@ RUN sed -i 's|setenv\tNMHOME\t.*|setenv\tNMHOME\t/app/repo/netMHCIIpan-4.3|' \
 
 # Copy application source
 COPY src/ ./src/
+RUN chmod -R a+r /app/src/
 COPY scripts/ ./scripts/
+RUN chmod -R a+r /app/scripts/
 COPY configs/ ./configs/
+RUN chmod -R a+r /app/configs/
 COPY examples/ ./examples/
+RUN chmod -R a+r /app/examples/
 
 # Create directories for jobs and tmp
 RUN mkdir -p jobs tmp
