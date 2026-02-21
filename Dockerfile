@@ -13,22 +13,29 @@ RUN pip install --no-cache-dir \
     fastmcp loguru click pandas numpy tqdm openpyxl
 RUN pip install --no-cache-dir --ignore-installed fastmcp
 
-# Extract NetMHCIIpan binary distribution if tarball is present
-# Note: The tarball is gitignored, so it's only available in local builds
-# GitHub Actions and CI/CD builds without the tarball will proceed without NetMHCIIpan
+# Extract NetMHCIIpan binary distribution
+# The tarball is gitignored but should be provided via:
+# - Local builds: place netMHCIIpan-4.3istatic.Linux.tar.gz in repo/
+# - GitHub Actions: use GitHub Actions cache/artifacts (see .github/workflows/docker-build-netmhc.yml)
 RUN mkdir -p repo && \
-    if [ -f repo/netMHCIIpan-4.3istatic.Linux.tar.gz ]; then \
-      echo "Installing NetMHCIIpan from local tarball"; \
-      tar -xzf repo/netMHCIIpan-4.3istatic.Linux.tar.gz -C repo/ && \
-      sed -i 's|setenv\tNMHOME\t.*|setenv\tNMHOME\t/app/repo/netMHCIIpan-4.3|' \
-          repo/netMHCIIpan-4.3/netMHCIIpan && \
-      chmod +x repo/netMHCIIpan-4.3/netMHCIIpan && \
-      chmod +x repo/netMHCIIpan-4.3/Linux_x86_64/bin/*; \
-    else \
-      echo "WARNING: NetMHCIIpan tarball not found in repo/"; \
-      echo "For local builds: place netMHCIIpan-4.3istatic.Linux.tar.gz in repo/"; \
-      echo "For GitHub Actions: configure build artifact or external storage"; \
-    fi
+    if [ ! -f repo/netMHCIIpan-4.3istatic.Linux.tar.gz ]; then \
+      echo "ERROR: NetMHCIIpan tarball not found at repo/netMHCIIpan-4.3istatic.Linux.tar.gz"; \
+      echo ""; \
+      echo "For LOCAL BUILDS:"; \
+      echo "  1. Download netMHCIIpan-4.3 from http://www.cbs.dtu.dk/services/NetMHCIIpan/"; \
+      echo "  2. Copy: cp netMHCIIpan-4.3istatic.Linux.tar.gz tool-mcps/netmhc2pan_mcp/repo/"; \
+      echo "  3. Re-run Docker build"; \
+      echo ""; \
+      echo "For CI/CD (GitHub Actions):"; \
+      echo "  See .github/workflows/docker-build-netmhc.yml for setup instructions"; \
+      echo ""; \
+      exit 1; \
+    fi && \
+    tar -xzf repo/netMHCIIpan-4.3istatic.Linux.tar.gz -C repo/ && \
+    sed -i 's|setenv\tNMHOME\t.*|setenv\tNMHOME\t/app/repo/netMHCIIpan-4.3|' \
+        repo/netMHCIIpan-4.3/netMHCIIpan && \
+    chmod +x repo/netMHCIIpan-4.3/netMHCIIpan && \
+    chmod +x repo/netMHCIIpan-4.3/Linux_x86_64/bin/*
 
 # Copy application source
 COPY src/ ./src/
