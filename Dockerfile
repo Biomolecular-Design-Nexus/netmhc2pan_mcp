@@ -4,6 +4,7 @@ FROM python:3.10-slim
 RUN apt-get update && apt-get install -y \
     tcsh \
     gawk \
+    wget \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -33,17 +34,18 @@ RUN mkdir -p repo && \
           echo "Retry in 5 seconds..."; \
           sleep 5; \
         else \
-          echo "ERROR: Failed to download NetMHCIIpan after 3 attempts"; \
-          echo "Please check your internet connection or download manually from:"; \
-          echo "  http://www.cbs.dtu.dk/services/NetMHCIIpan/"; \
-          exit 1; \
+          echo "WARNING: Failed to download NetMHCIIpan after 3 attempts."; \
+          echo "Image will be built without NetMHCIIpan binary."; \
+          echo "For local builds, place netMHCIIpan-4.3 in repo/ first."; \
         fi; \
       done; \
     fi && \
-    sed -i 's|setenv\tNMHOME\t.*|setenv\tNMHOME\t/app/repo/netMHCIIpan-4.3|' \
-        repo/netMHCIIpan-4.3/netMHCIIpan && \
-    chmod +x repo/netMHCIIpan-4.3/netMHCIIpan && \
-    chmod +x repo/netMHCIIpan-4.3/Linux_x86_64/bin/*
+    if [ -d repo/netMHCIIpan-4.3 ]; then \
+      sed -i 's|setenv\tNMHOME\t.*|setenv\tNMHOME\t/app/repo/netMHCIIpan-4.3|' \
+          repo/netMHCIIpan-4.3/netMHCIIpan && \
+      chmod +x repo/netMHCIIpan-4.3/netMHCIIpan && \
+      chmod +x repo/netMHCIIpan-4.3/Linux_x86_64/bin/*; \
+    fi
 
 # ====== LICENSE NOTICE ======
 # NetMHCIIpan is developed by CBS (Center for Biological Sequence Analysis),
